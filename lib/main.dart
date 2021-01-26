@@ -69,8 +69,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Container(
         child: Center(
           child: currentUser != null
-              ? Text("Hey, ${currentUser.userID}")
-              : Text("Please log in"),
+              ? Text("Hey, ${currentUser.userID}!",
+                  style: TextStyle(fontSize: 40))
+              : Text("Please Login", style: TextStyle(fontSize: 30)),
         ),
       ),
       drawer: WidgetDrawer(),
