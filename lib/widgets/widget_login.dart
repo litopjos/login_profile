@@ -11,20 +11,20 @@ Future<void> showLoginDialog(
     context: context,
     builder: (ctx) {
       return AlertDialog(
-        content: WidgetLoginLogout(),
+        content: WidgetLogin(),
       );
     },
   );
 }
 
-class WidgetLoginLogout extends StatefulWidget {
-  WidgetLoginLogout();
+class WidgetLogin extends StatefulWidget {
+  WidgetLogin();
 
   @override
-  _WidgetLoginLogoutState createState() => _WidgetLoginLogoutState();
+  _WidgetLoginState createState() => _WidgetLoginState();
 }
 
-class _WidgetLoginLogoutState extends State<WidgetLoginLogout> {
+class _WidgetLoginState extends State<WidgetLogin> {
   GlobalKey<FormState> keyForm = GlobalKey<FormState>();
   String userID = "";
   String password = "";
@@ -39,19 +39,23 @@ class _WidgetLoginLogoutState extends State<WidgetLoginLogout> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            FlatButton(
-              child: Text("Sign Up"),
-              onPressed: () async {
-                var profile =
-                    await Navigator.of(context).pushNamed(ROUTE_USER_PROFILE);
-                UserProfile userProfile = profile as UserProfile;
-                if (userProfile != null) {
-                  setState(() {
-                    userID = userProfile.userID;
-                    password = userProfile.password;
-                  });
-                }
-              },
+            Align(
+              alignment: Alignment.centerRight,
+              child: FlatButton(
+                child:
+                    Text("Sign Up", style: TextStyle(color: Colors.lightBlue)),
+                onPressed: () async {
+                  var profile =
+                      await Navigator.of(context).pushNamed(ROUTE_USER_PROFILE);
+                  UserProfile userProfile = profile as UserProfile;
+                  if (userProfile != null) {
+                    setState(() {
+                      userID = userProfile.userID;
+                      password = userProfile.password;
+                    });
+                  }
+                },
+              ),
             ),
             TextFormField(
               key:
@@ -86,24 +90,27 @@ class _WidgetLoginLogoutState extends State<WidgetLoginLogout> {
               obscureText: true,
               onSaved: (value) => password = value,
             ),
-            RaisedButton(
-              child: Text('Login'),
-              onPressed: () async {
-                if (keyForm.currentState.validate()) {
-                  keyForm.currentState.save();
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              child: RaisedButton(
+                child: Text('Login'),
+                onPressed: () async {
+                  if (keyForm.currentState.validate()) {
+                    keyForm.currentState.save();
 
-                  ProviderCurrentUserProfile provider =
-                      Provider.of<ProviderCurrentUserProfile>(context,
-                          listen: false);
+                    ProviderCurrentUserProfile provider =
+                        Provider.of<ProviderCurrentUserProfile>(context,
+                            listen: false);
 
-                  if (provider.login(userID: userID, password: password)) {
-                    Navigator.of(context).pop();
-                  } else {
-                    await showAlertDialog(
-                        context, "Login FAILED: invalid UserID / Password");
+                    if (provider.login(userID: userID, password: password)) {
+                      Navigator.of(context).pop();
+                    } else {
+                      await showAlertDialog(
+                          context, "Login FAILED: invalid UserID / Password");
+                    }
                   }
-                }
-              },
+                },
+              ),
             )
           ],
         ),

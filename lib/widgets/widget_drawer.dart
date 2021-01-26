@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import 'package:login/global.dart';
 import "package:provider/provider.dart";
 
-import 'package:login/widgets/widget_loginlogout.dart';
+import 'package:login/widgets/widget_login.dart';
 import "../providers/provider_current_user_profile.dart";
 import "../models/user_profile.dart";
 

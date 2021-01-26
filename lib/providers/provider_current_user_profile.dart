@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:provider/provider.dart";
 
 import "./provider_user_profiles.dart";
 import '../models/user_profile.dart';

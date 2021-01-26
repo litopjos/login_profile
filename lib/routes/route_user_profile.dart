@@ -45,7 +45,7 @@ class _RouteUserProfileState extends State<RouteUserProfile> {
           title: Text("User Profile"),
         ),
         body: Container(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(30),
           child: Form(
             key: keyForm,
             child: Column(
@@ -68,6 +68,7 @@ class _RouteUserProfileState extends State<RouteUserProfile> {
                     labelText: "Address:",
                   ),
                   initialValue: currentUserProfile.address,
+                  maxLines: 5,
                   validator: (value) {
                     if (value.trim().isEmpty) {
                       return "Please enter your address";
@@ -106,26 +107,32 @@ class _RouteUserProfileState extends State<RouteUserProfile> {
                   onSaved: (value) => currentUserProfile.password = value,
                 ),
                 isAddOperation
-                    ? RaisedButton(
-                        child: Text('Add'),
-                        onPressed: () {
-                          if (keyForm.currentState.validate()) {
-                            keyForm.currentState.save();
-                            provider.createUserProfile(currentUserProfile);
-                            Navigator.of(context).pop(currentUserProfile);
-                          }
-                        },
+                    ? Container(
+                        margin: EdgeInsets.only(top: 20),
+                        child: RaisedButton(
+                          child: Text('Add'),
+                          onPressed: () {
+                            if (keyForm.currentState.validate()) {
+                              keyForm.currentState.save();
+                              provider.createUserProfile(currentUserProfile);
+                              Navigator.of(context).pop(currentUserProfile);
+                            }
+                          },
+                        ),
                       )
-                    : RaisedButton(
-                        child: Text('Edit'),
-                        onPressed: () {
-                          if (keyForm.currentState.validate()) {
-                            keyForm.currentState.save();
-                            provider.updateUserProfile(
-                                orgUserID, currentUserProfile);
-                            Navigator.of(context).pop(currentUserProfile);
-                          }
-                        },
+                    : Container(
+                        margin: EdgeInsets.only(top: 20),
+                        child: RaisedButton(
+                          child: Text('Edit'),
+                          onPressed: () {
+                            if (keyForm.currentState.validate()) {
+                              keyForm.currentState.save();
+                              provider.updateUserProfile(
+                                  orgUserID, currentUserProfile);
+                              Navigator.of(context).pop(currentUserProfile);
+                            }
+                          },
+                        ),
                       ),
               ],
             ),
